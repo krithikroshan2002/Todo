@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">todo</string>
+    <string name="create">create</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="userProject"> Enter your project</string>
+    <string name="userInput"> Enter your todo</string>
+    <string name="description">Enter your description</string>
+    <string name="remove">remove</string>
+</resources>

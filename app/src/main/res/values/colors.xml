@@ -2,7 +2,5 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="acid">#95C6C6C6</color>
-    <color name="blue">#5165D3</color>
-    <color name="lightOrange">#D88C1A</color>
+    <color name="acid">#757575</color>
 </resources>

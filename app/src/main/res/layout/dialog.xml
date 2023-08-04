@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-    </RelativeLayout>
-
-    <EditText
-        android:id="@+id/description"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="description"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="395dp"
-        android:textSize="20sp" />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="331dp"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/nameEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/description"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="-3dp"
-        android:layout_marginBottom="38dp"
-        android:hint="@string/userInput"
-        android:textSize="20dp" />
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-2dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/userProject"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="14dp"
+            android:hint="@string/description"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

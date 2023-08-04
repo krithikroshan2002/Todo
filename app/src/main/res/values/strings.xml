@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Todo Application</string>
+    <string name="todo_application">Todo List</string>
+    <string name="create">Create</string>
+    <string name="list">List</string>
+    <string name="update">Update</string>
+    <string name="remove">remove</string>
+    <string name="submit">Submit</string>
+    <string name="userInput">Enter your Todo</string>
+    <string name="updateTodoId">Enter the Todo id for update</string>
+    <string name="deleteTodoId">Enter the Todo id for delete</string>
+</resources>

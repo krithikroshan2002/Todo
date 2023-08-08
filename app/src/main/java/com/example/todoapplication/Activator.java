@@ -25,8 +25,9 @@ import java.util.List;
 
 /**
  * <p>
- *     Represents the Activator of the Application
+ * Represents the Activator of the Application
  * </p>
+ *
  * @author Roshan
  * @version 1.0
  */
@@ -39,9 +40,11 @@ public class Activator extends AppCompatActivity {
 
     /**
      * <p>
-     *     Represents the
+     * Called when the activity is first created
      * </p>
-     * @param savedInstanceState
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data
      */
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -81,17 +84,28 @@ public class Activator extends AppCompatActivity {
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
                 final Project projectName = list.get(i);
                 final Intent intent = new Intent(Activator.this, ProjectActivity.class);
-                intent.putExtra("name", projectName.getLabel());
+
+                intent.putExtra("projectName", projectName.getLabel());
                 startActivity(intent);
-                }
+            }
         });
     }
 
+    /**
+     * <p>
+     * Called when the user presses the back button.
+     * </p>
+     */
     @Override
     public void onBackPressed() {
         drawerLayout.closeDrawer(GravityCompat.START);
     }
 
+    /**
+     * <p>
+     * Obtains the user's name through user interaction
+     * </p>
+     */
     private void obtainName() {
         final EditText text = new EditText(this);
         text.setInputType(InputType.TYPE_CLASS_TEXT);

@@ -29,6 +29,14 @@ public class Project {
         this.label = label;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = !this.checked;
+    }
+
     @NonNull
     @Override
     public String toString() {

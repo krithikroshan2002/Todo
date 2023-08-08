@@ -105,7 +105,7 @@ public class ProjectActivity extends AppCompatActivity {
                 @Override
                 public void onClick(final View v) {
                     tableLayout.removeView(tableRow);
-                    ;
+                    todos.remove(todo);
                 }
             });
 
@@ -114,7 +114,7 @@ public class ProjectActivity extends AppCompatActivity {
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                    if (isChecked) {
+                    if (! todo.isChecked()) {
                         todoView.setTextColor(ContextCompat.getColor(ProjectActivity.this, android.R.color.darker_gray));
                         todo.setChecked();
                     } else {
@@ -148,6 +148,10 @@ public class ProjectActivity extends AppCompatActivity {
                 final TextView todoView = new TextView(this);
                 final ImageView closeIcon = new ImageView(this);
 
+                if(todo.isChecked()) {
+                    checkBox.setChecked(true);
+                }
+
                 tableRow.addView(checkBox);
                 todoView.setText(todoItem);
                 tableRow.addView(todoView);
@@ -157,6 +161,7 @@ public class ProjectActivity extends AppCompatActivity {
                     @Override
                     public void onClick(final View v) {
                         tableLayout.removeView(tableRow);
+                        todos.remove(todo);
                     }
                 });
                 tableRow.addView(closeIcon);
@@ -165,16 +170,17 @@ public class ProjectActivity extends AppCompatActivity {
                 checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                        if (isChecked) {
+                        if (todo.isChecked()) {
                             todoView.setTextColor(ContextCompat.getColor(ProjectActivity.this, android.R.color.darker_gray));
+                            final int index = todos.indexOf(todo);
                             todo.setChecked();
+                            final Todo todo1 = new Todo(todo.getId(), todo.getLabel(), todo.isChecked(), todo.getParentId());
+                            todos.set(index, todo1);
                         } else {
                             todoView.setTextColor(Color.BLACK);
                         }
                     }
                 });
-
-                this.todo.getText().clear();
             }
         }
     }

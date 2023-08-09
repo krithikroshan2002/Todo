@@ -33,12 +33,12 @@ import java.util.List;
  */
 public class Activator extends AppCompatActivity {
 
-    public List<Project> projectList;
+    public static List<Project> projectList;
     private DrawerLayout drawerLayout;
-    private Button removeButton;
-    private ArrayAdapter<Project> arrayAdapter;
+    private static  ArrayAdapter<Project> arrayAdapter;
     private Long projectId;
-    private static ProjectActivity projectActivity;
+    private ProjectActivity projectActivity;
+    private ListView listView;
 
     /**
      * <p>
@@ -56,7 +56,7 @@ public class Activator extends AppCompatActivity {
         Button addButton = findViewById(R.id.createList);
         drawerLayout = findViewById(R.id.Layout);
         ImageButton menuButton = findViewById(R.id.menuButton);
-        ListView listView = findViewById(R.id.nameListView);
+        listView = findViewById(R.id.nameListView);
         projectList = new ArrayList<>();
         projectId = 1L;
         projectActivity = new ProjectActivity();
@@ -158,6 +158,4 @@ public class Activator extends AppCompatActivity {
         projectActivity.removeTodo(project.getId());
         arrayAdapter.notifyDataSetChanged();
     }
-
-
 }

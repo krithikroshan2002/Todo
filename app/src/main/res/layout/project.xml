@@ -19,7 +19,7 @@
                 android:id="@+id/menuButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2sp"
+                android:layout_margin="5sp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/menu" />
 
@@ -32,20 +32,12 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
-            <ImageButton
-                android:id="@+id/addTodo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="90sp"
-                android:layout_marginTop="2sp"
-                android:layout_marginEnd="10sp"
-                android:src="@drawable/add" />
 
             <ImageButton
-                android:id="@+id/search_bar"
+                android:id="@+id/search_ButtonTodo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2sp"
+                android:layout_marginStart="120sp"
                 android:src="@drawable/search" />
 
         </LinearLayout>

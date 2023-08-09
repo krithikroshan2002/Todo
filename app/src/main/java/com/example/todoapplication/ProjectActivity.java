@@ -39,6 +39,7 @@ public class ProjectActivity extends AppCompatActivity {
     ;
     private TextView name;
     private static Long todoId = 1L;
+    private ImageButton searchButton;
 
     /**
      * <p>
@@ -57,6 +58,7 @@ public class ProjectActivity extends AppCompatActivity {
         final String projectId = intent.getStringExtra("projectId");
         final String projectName = intent.getStringExtra("projectName");
         viewTodoList(projectId);
+        searchButton = findViewById(R.id.search_ButtonTodo);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -74,6 +76,16 @@ public class ProjectActivity extends AppCompatActivity {
             @Override
             public void onClick(final View v) {
                 createTodo(projectId);
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(ProjectActivity.this, SearchActivity.class);
+                intent.putExtra("projectId", projectId);
+                intent.putExtra("projectName", projectName);
+                startActivity(intent);
             }
         });
 

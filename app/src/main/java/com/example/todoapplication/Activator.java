@@ -33,11 +33,11 @@ import java.util.List;
  */
 public class Activator extends AppCompatActivity {
 
-    public static List<Project> projectList;
+    public List<Project> projectList;
     private DrawerLayout drawerLayout;
     private Button removeButton;
-    private static ArrayAdapter<Project> arrayAdapter;
-    private static Long projectId;
+    private ArrayAdapter<Project> arrayAdapter;
+    private Long projectId;
     private static ProjectActivity projectActivity;
 
     /**

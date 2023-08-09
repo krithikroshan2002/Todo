@@ -68,7 +68,7 @@ public class ProjectActivity extends AppCompatActivity {
         name = findViewById(R.id.projectName);
 
         name.setText(projectName);
-        final Button addButton = findViewById(R.id.button);
+        final Button addButton = findViewById(R.id.createTodo);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

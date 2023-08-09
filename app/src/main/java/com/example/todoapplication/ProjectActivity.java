@@ -1,5 +1,6 @@
 package com.example.todoapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -51,8 +52,10 @@ public class ProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project);
         menuButton = findViewById(R.id.menuButton1);
-        final String projectName = getIntent().getStringExtra("projectName");
-        viewTodoList(projectName);
+        final Intent intent = getIntent();
+        final String projectId = intent.getStringExtra("projectId");
+        final String projectName = intent.getStringExtra("projectName");
+        viewTodoList(projectId);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -69,7 +72,7 @@ public class ProjectActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                createTodo(projectName);
+                createTodo(projectId);
             }
         });
 
@@ -148,7 +151,7 @@ public class ProjectActivity extends AppCompatActivity {
                 final TextView todoView = new TextView(this);
                 final ImageView closeIcon = new ImageView(this);
 
-                if(todo.isChecked()) {
+                if(todo.isChecked()){
                     checkBox.setChecked(true);
                 }
 

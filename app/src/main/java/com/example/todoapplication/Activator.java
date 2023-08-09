@@ -82,10 +82,11 @@ public class Activator extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
-                final Project projectName = list.get(i);
+                final Project project = list.get(i);
                 final Intent intent = new Intent(Activator.this, ProjectActivity.class);
 
-                intent.putExtra("projectName", projectName.getLabel());
+                intent.putExtra("projectId", project.getId());
+                intent.putExtra("projectName", project.getLabel());
                 startActivity(intent);
             }
         });

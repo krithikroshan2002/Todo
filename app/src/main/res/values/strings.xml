@@ -3,4 +3,5 @@
     <string name="create">create</string>
     <string name="todo">Todos</string>
     <string name="getTodo">Enter your todo </string>
+    <string name="remove">Remove</string>
 </resources>

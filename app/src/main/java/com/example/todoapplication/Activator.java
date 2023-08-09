@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class Activator extends AppCompatActivity {
 
-    private List<Project> list;
+    private List<Project> projectList;
     private DrawerLayout drawerLayout;
     private ArrayAdapter<Project> arrayAdapter;
     private static Long projectId;
@@ -55,9 +55,9 @@ public class Activator extends AppCompatActivity {
         drawerLayout = findViewById(R.id.Layout);
         ImageButton menuButton = findViewById(R.id.menuButton);
         ListView listView = findViewById(R.id.nameListView);
-        list = new ArrayList<>();
+        projectList = new ArrayList<>();
         projectId = 1L;
-        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, list);
+        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, projectList);
 
         listView.setAdapter(arrayAdapter);
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class Activator extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
-                final Project project = list.get(i);
+                final Project project = projectList.get(i);
                 final Intent intent = new Intent(Activator.this, ProjectActivity.class);
 
                 intent.putExtra("projectId", project.getId());
@@ -116,11 +116,22 @@ public class Activator extends AppCompatActivity {
 
             if (!name.isEmpty()) {
                 final Project project = new Project(String.valueOf(projectId++), name);
-                list.add(project);
+                projectList.add(project);
                 arrayAdapter.notifyDataSetChanged();
             } else {
                 Toast.makeText(getApplicationContext(), "Enter project name", Toast.LENGTH_SHORT).show();
             }
         }).setNegativeButton("Cancel", null).create().show();
+    }
+
+    /**
+     * <p>
+     *     Represent removal of project from projectList
+     * </p>
+     */
+    public void removeProject(final int position) {
+        projectList.remove(position);
+
+        arrayAdapter.notifyDataSetChanged();
     }
 }

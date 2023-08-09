@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -87,45 +88,49 @@ public class ProjectActivity extends AppCompatActivity {
      */
     public void createTodo(final String parentId) {
         final String todoItem = todo.getText().toString();
-        final Todo todo = new Todo(String.valueOf(todoId++), todoItem, false, parentId);
+        if (todoItem.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"Enter todo",Toast.LENGTH_LONG).show();
+        } else {
+            final Todo todo = new Todo(String.valueOf(todoId++), todoItem, false, parentId);
 
-        todos.add(todo);
+            todos.add(todo);
 
-        if (todos != null) {
-            final TableLayout tableLayout = findViewById(R.id.tableLayout);
-            final TableRow tableRow = new TableRow(this);
-            final CheckBox checkBox = new CheckBox(this);
-            final TextView todoView = new TextView(this);
-            final ImageView closeIcon = new ImageView(this);
+            if (todos != null) {
+                final TableLayout tableLayout = findViewById(R.id.tableLayout);
+                final TableRow tableRow = new TableRow(this);
+                final CheckBox checkBox = new CheckBox(this);
+                final TextView todoView = new TextView(this);
+                final ImageView closeIcon = new ImageView(this);
 
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT));
-            tableRow.addView(checkBox);
-            todoView.setText(todoItem);
-            tableRow.addView(todoView);
-            closeIcon.setImageResource(R.drawable.baseline_close_24);
-            closeIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    tableLayout.removeView(tableRow);
-                    todos.remove(todo);
-                }
-            });
-
-            tableRow.addView(closeIcon);
-            tableLayout.addView(tableRow);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
-                    if (! todo.isChecked()) {
-                        todoView.setTextColor(ContextCompat.getColor(ProjectActivity.this, android.R.color.darker_gray));
-                        todo.setChecked();
-                    } else {
-                        todoView.setTextColor(Color.BLACK);
+                tableRow.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                        TableLayout.LayoutParams.WRAP_CONTENT));
+                tableRow.addView(checkBox);
+                todoView.setText(todoItem);
+                tableRow.addView(todoView);
+                closeIcon.setImageResource(R.drawable.baseline_close_24);
+                closeIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        tableLayout.removeView(tableRow);
+                        todos.remove(todo);
                     }
-                }
-            });
-            this.todo.getText().clear();
+                });
+
+                tableRow.addView(closeIcon);
+                tableLayout.addView(tableRow);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                        if (isChecked) {
+                            todoView.setTextColor(ContextCompat.getColor(ProjectActivity.this, android.R.color.darker_gray));
+                            todo.setChecked();
+                        } else {
+                            todoView.setTextColor(Color.BLACK);
+                        }
+                    }
+                });
+                this.todo.getText().clear();
+            }
         }
     }
 
@@ -151,8 +156,9 @@ public class ProjectActivity extends AppCompatActivity {
                 final TextView todoView = new TextView(this);
                 final ImageView closeIcon = new ImageView(this);
 
-                if(todo.isChecked()){
+                if (todo.isChecked()) {
                     checkBox.setChecked(true);
+                    todoView.setTextColor(ContextCompat.getColor(ProjectActivity.this, android.R.color.darker_gray));
                 }
 
                 tableRow.addView(checkBox);

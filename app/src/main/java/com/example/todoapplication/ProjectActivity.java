@@ -134,6 +134,14 @@ public class ProjectActivity extends AppCompatActivity {
         }
     }
 
+    public void removeTodo(final String parentId) {
+        for (final Todo todo: todos) {
+            if (todo.getParentId().equals(parentId)) {
+                todos.remove(todo);
+            }
+        }
+    }
+
     /**
      * <p>
      * Displays the list of todo items under the specified parent.

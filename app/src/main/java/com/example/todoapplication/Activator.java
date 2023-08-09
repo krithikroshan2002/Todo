@@ -33,10 +33,12 @@ import java.util.List;
  */
 public class Activator extends AppCompatActivity {
 
-    private List<Project> projectList;
+    public static List<Project> projectList;
     private DrawerLayout drawerLayout;
-    private ArrayAdapter<Project> arrayAdapter;
+    private Button removeButton;
+    private static ArrayAdapter<Project> arrayAdapter;
     private static Long projectId;
+    private static ProjectActivity projectActivity;
 
     /**
      * <p>
@@ -57,9 +59,16 @@ public class Activator extends AppCompatActivity {
         ListView listView = findViewById(R.id.nameListView);
         projectList = new ArrayList<>();
         projectId = 1L;
+        projectActivity = new ProjectActivity();
         arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, projectList);
 
         listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -79,17 +88,30 @@ public class Activator extends AppCompatActivity {
             }
         });
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
-                final Project project = projectList.get(i);
-                final Intent intent = new Intent(Activator.this, ProjectActivity.class);
-
-                intent.putExtra("projectId", project.getId());
-                intent.putExtra("projectName", project.getLabel());
-                startActivity(intent);
+                onClickProject(i);
             }
         });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                removeProject(i);
+                return true;
+            }
+        });
+    }
+
+    public void onClickProject(final int position) {
+        final Project project = projectList.get(position);
+        final Intent intent = new Intent(Activator.this, ProjectActivity.class);
+
+        intent.putExtra("projectId", project.getId());
+        intent.putExtra("projectName", project.getLabel());
+        startActivity(intent);
     }
 
     /**
@@ -128,10 +150,14 @@ public class Activator extends AppCompatActivity {
      * <p>
      *     Represent removal of project from projectList
      * </p>
+     * @param position Represents the position of project in projectList
      */
     public void removeProject(final int position) {
+        final Project project = projectList.get(position);
         projectList.remove(position);
-
+        projectActivity.removeTodo(project.getId());
         arrayAdapter.notifyDataSetChanged();
     }
+
+
 }

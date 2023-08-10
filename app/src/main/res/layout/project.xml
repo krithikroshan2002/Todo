@@ -39,8 +39,15 @@
                 android:id="@+id/search_ButtonTodo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="120sp"
+                android:layout_marginStart="80sp"
                 android:src="@drawable/search" />
+
+            <ImageButton
+                android:id="@+id/add_ButtonTodo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:src="@drawable/add" />
 
         </LinearLayout>
 
@@ -52,6 +59,29 @@
             android:text="Todo"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="250sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/search_bar"
+                android:visibility="gone"
+                app:iconifiedByDefault="false"
+                app:queryHint="Enter your query"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:id="@+id/search_bar_status"
+                android:backgroundTint="@color/black"/>
+        </LinearLayout>
 
         <EditText
             android:id="@+id/todoEditText"
@@ -80,96 +110,9 @@
                 android:id="@+id/tableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="*"></TableLayout>
+                android:stretchColumns="*" />
 
         </ScrollView>
     </LinearLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="end"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_dark"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <ImageButton
-                android:id="@+id/menu_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4sp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/arrow_back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4sp"
-                android:layout_marginStart="8dp"
-                android:text="@string/app_name"
-                android:textColor="@android:color/white"
-                android:textSize="20sp" />
-
-            <ImageButton
-                android:id="@+id/add_todo_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="80sp"
-                android:layout_marginTop="2sp"
-                android:layout_marginEnd="10sp"
-                android:src="@drawable/add" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20sp">
-
-            <androidx.appcompat.widget.SearchView
-                android:layout_width="180sp"
-                android:layout_height="wrap_content"
-                android:id="@+id/search_bar"
-                app:queryHint="Enter your query"
-                app:iconifiedByDefault = "false">
-            </androidx.appcompat.widget.SearchView>
-
-            <Spinner
-                android:layout_width="wrap_content"
-                android:id="@+id/search_bar_status"
-                android:layout_height="match_parent"
-                android:textAlignment="center"
-                android:backgroundTint="@color/black"
-                android:layout_marginStart="20sp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5sp"
-            >
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/todoSearchItems"/>
-
-        </LinearLayout>
-        </LinearLayout>
-
-    </com.google.android.material.navigation.NavigationView>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

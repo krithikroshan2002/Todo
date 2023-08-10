@@ -38,7 +38,6 @@ public class Activator extends AppCompatActivity {
     private static  ArrayAdapter<Project> arrayAdapter;
     private Long projectId;
     private ProjectActivity projectActivity;
-    private ListView listView;
 
     /**
      * <p>
@@ -52,11 +51,11 @@ public class Activator extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageView backButton = findViewById(R.id.backButton);
-        Button addButton = findViewById(R.id.createList);
+        final ImageView backButton = findViewById(R.id.backButton);
+        final Button addButton = findViewById(R.id.createList);
         drawerLayout = findViewById(R.id.Layout);
-        ImageButton menuButton = findViewById(R.id.menuButton);
-        listView = findViewById(R.id.nameListView);
+        final ImageButton menuButton = findViewById(R.id.menuButton);
+        final ListView listView = findViewById(R.id.nameListView);
         projectList = new ArrayList<>();
         projectId = 1L;
         projectActivity = new ProjectActivity();
@@ -65,7 +64,7 @@ public class Activator extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(final AdapterView<?> adapterView, final  View view, final int i, final long l) {
 
             }
         });
@@ -141,7 +140,7 @@ public class Activator extends AppCompatActivity {
                 projectList.add(project);
                 arrayAdapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(getApplicationContext(), "Enter project name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Enter project name", Toast.LENGTH_SHORT).show();
             }
         }).setNegativeButton("Cancel", null).create().show();
     }

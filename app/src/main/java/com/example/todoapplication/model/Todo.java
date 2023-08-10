@@ -1,5 +1,15 @@
 package com.example.todoapplication.model;
 
+import androidx.annotation.NonNull;
+
+/**
+ * <p>
+ * Represents an Todo
+ * </p>
+ *
+ * @author Roshan
+ * @version 1.0
+ */
 public class Todo {
     private String id;
     private String label;
@@ -43,5 +53,22 @@ public class Todo {
 
     public void setChecked() {
         this.isChecked = !this.isChecked;
+    }
+
+    public String getTodo() {
+        final StringBuffer buffer = new StringBuffer();
+        buffer.append("id - ");
+        buffer.append(id);
+        buffer.append("  label-");
+        buffer.append(label);
+        buffer.append("   checked -");
+        buffer.append(isChecked);
+        return buffer.toString();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getTodo();
     }
 }

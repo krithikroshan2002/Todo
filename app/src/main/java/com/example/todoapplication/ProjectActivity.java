@@ -4,19 +4,26 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.todoapplication.model.Todo;
 
@@ -35,11 +42,14 @@ public class ProjectActivity extends AppCompatActivity {
 
     private ImageButton menuButton;
     private EditText todo;
-    private static List<Todo> todos = new ArrayList<>();
-    ;
+    public static List<Todo> todos = new ArrayList<>();
     private TextView name;
     private static Long todoId = 1L;
     private ImageButton searchButton;
+    private DrawerLayout drawerLayout;
+    private ArrayAdapter<Todo> todoAdapter;
+    private List<Todo> searchTodos;
+    private String spinnerStatus = "status";
 
     /**
      * <p>
@@ -53,12 +63,53 @@ public class ProjectActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project);
+        drawerLayout = findViewById(R.id.drawerLayoutTodo);
         menuButton = findViewById(R.id.menuButton1);
         final Intent intent = getIntent();
         final String projectId = intent.getStringExtra("projectId");
         final String projectName = intent.getStringExtra("projectName");
         viewTodoList(projectId);
         searchButton = findViewById(R.id.search_ButtonTodo);
+        final ImageButton addTodo = findViewById(R.id.add_todo_search);
+        final ImageButton searchMenuButton = findViewById(R.id.menu_search);
+        final Spinner statusSpinner = findViewById(R.id.search_bar_status);
+        final SearchView searchView = findViewById(R.id.search_bar);
+        final List<String> todoStatuses = new ArrayList<>();
+        searchTodos = new ArrayList<>();
+        final ListView todosView = findViewById(R.id.todoSearchItems);
+
+        todoStatuses.add("status");
+        todoStatuses.add("checked");
+        todoStatuses.add("unchecked");
+        final ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, todoStatuses);
+        todoAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, searchTodos);
+
+        statusSpinner.setAdapter(statusAdapter);
+        statusAdapter.notifyDataSetChanged();
+        todosView.setAdapter(todoAdapter);
+
+        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+                switch (position) {
+                    case 1:
+                        spinnerStatus = "status";
+                        break;
+                    case 2:
+                        spinnerStatus = "checked";
+                        break;
+                    case 3:
+                        spinnerStatus = "unChecked";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -82,13 +133,68 @@ public class ProjectActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent intent = new Intent(ProjectActivity.this, SearchActivity.class);
-                intent.putExtra("projectId", projectId);
-                intent.putExtra("projectName", projectName);
-                startActivity(intent);
+                drawerLayout.openDrawer(GravityCompat.END);
             }
         });
 
+        addTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        searchMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String searchElement) {
+                searchTodos.clear();
+                getSearchItem(searchElement);
+                todoAdapter.notifyDataSetChanged();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(final String searchElement) {
+                searchTodos.clear();
+                getSearchItem(searchElement);
+                todoAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+
+    }
+
+    public void getSearchItem(final String searchElement) {
+        if (spinnerStatus.equals("checked")) {
+            for (final Todo todo : todos) {
+                if (todo.getLabel().equals(searchElement)) {
+                    if (todo.isChecked()) {
+                        searchTodos.add(todo);
+                    }
+                }
+            }
+        } else if (spinnerStatus.equals("unChecked")) {
+            for (final Todo todo : todos) {
+                if (todo.getLabel().equals(searchElement)) {
+                    if (! todo.isChecked()) {
+                        searchTodos.add(todo);
+                    }
+                }
+            }
+        } else {
+            for (final Todo todo : todos) {
+                if (todo.getLabel().equals(searchElement)) {
+                    searchTodos.add(todo);
+                }
+            }
+        }
     }
 
     /**

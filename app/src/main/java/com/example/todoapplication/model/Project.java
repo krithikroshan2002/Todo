@@ -2,6 +2,14 @@ package com.example.todoapplication.model;
 
 import androidx.annotation.NonNull;
 
+/**
+ * <p>
+ * Represents project
+ * </p>
+ *
+ * @author Roshan
+ * @version 1.0
+ */
 public class Project {
 
     private String id;

@@ -33,10 +33,11 @@ import java.util.List;
  */
 public class Activator extends AppCompatActivity {
 
-    private List<Project> list;
+    public static List<Project> projectList;
+    private static ArrayAdapter<Project> arrayAdapter;
     private DrawerLayout drawerLayout;
-    private ArrayAdapter<Project> arrayAdapter;
-    private static Long projectId;
+    private Long projectId;
+    private ProjectActivity projectActivity;
 
     /**
      * <p>
@@ -50,16 +51,24 @@ public class Activator extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageView backButton = findViewById(R.id.backButton);
-        Button addButton = findViewById(R.id.createList);
+
+        final ImageView backButton = findViewById(R.id.backButton);
+        final Button addButton = findViewById(R.id.createList);
         drawerLayout = findViewById(R.id.Layout);
-        ImageButton menuButton = findViewById(R.id.menuButton);
-        ListView listView = findViewById(R.id.nameListView);
-        list = new ArrayList<>();
+        final ImageButton menuButton = findViewById(R.id.menuButton);
+        final ListView listView = findViewById(R.id.nameListView);
+        projectList = new ArrayList<>();
         projectId = 1L;
-        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, list);
+        projectActivity = new ProjectActivity();
+        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, projectList);
 
         listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final  View view, final int i, final long l) {
+
+            }
+        });
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -79,16 +88,30 @@ public class Activator extends AppCompatActivity {
             }
         });
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
-                final Project projectName = list.get(i);
-                final Intent intent = new Intent(Activator.this, ProjectActivity.class);
-
-                intent.putExtra("projectName", projectName.getLabel());
-                startActivity(intent);
+                onClickProject(i);
             }
         });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                removeProject(i);
+                return true;
+            }
+        });
+    }
+
+    public void onClickProject(final int position) {
+        final Project project = projectList.get(position);
+        final Intent intent = new Intent(Activator.this, ProjectActivity.class);
+
+        intent.putExtra("projectId", project.getId());
+        intent.putExtra("projectName", project.getLabel());
+        startActivity(intent);
     }
 
     /**
@@ -115,11 +138,24 @@ public class Activator extends AppCompatActivity {
 
             if (!name.isEmpty()) {
                 final Project project = new Project(String.valueOf(projectId++), name);
-                list.add(project);
+                projectList.add(project);
                 arrayAdapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(getApplicationContext(), "Enter project name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Enter project name", Toast.LENGTH_SHORT).show();
             }
         }).setNegativeButton("Cancel", null).create().show();
+    }
+
+    /**
+     * <p>
+     *     Represent removal of project from projectList
+     * </p>
+     * @param position Represents the position of project in projectList
+     */
+    public void removeProject(final int position) {
+        final Project project = projectList.get(position);
+        projectList.remove(position);
+        projectActivity.removeTodo(project.getId());
+        arrayAdapter.notifyDataSetChanged();
     }
 }
